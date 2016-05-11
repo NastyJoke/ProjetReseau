@@ -37,4 +37,19 @@ public class Idea {
     }
 
 
+    public String getDescription() {
+        return description;
+    }
+
+    public String getTech() {
+        return tech;
+    }
+
+    public String getAuthorMail() {
+        return authorMail;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
 }

@@ -5,7 +5,7 @@ package com.company.enums;
  */
 public enum CommandEnum {
 
-    ADD("add"),IDEAS("ideas"),PARTICIPATE("participate"),STUDENTS("students");
+    ADD("add"),IDEAS("ideas"),PARTICIPATE("participate"),STUDENTS("students"), GREET("greet!"), QUIT("quit");
 
     String cmd;
 

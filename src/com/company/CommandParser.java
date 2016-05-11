@@ -27,7 +27,13 @@ public class CommandParser {
 
     private CommandEnum parseAction()
     {
-        return CommandEnum.valueOf(cmd.split(" ")[0]);
+        CommandEnum ret;
+        try {
+            ret = CommandEnum.valueOf(cmd.split(" ")[0]);
+        } catch (IllegalArgumentException e){
+            ret = CommandEnum.QUIT;
+        }
+        return ret;
     }
 
     public String parseArguments() {
@@ -35,23 +41,34 @@ public class CommandParser {
         return cmd.substring(firstSpace+1);
     }
 
-    public void act()
+    public String act()
     {
+        String result = "Nothing to show here";
         switch(parseAction())
         {
             case ADD:
-                handleAdd();
+                result = handleAdd();
                 break;
             case IDEAS:
-                handleIdeas();
+                result = handleIdeas();
                 break;
             case PARTICIPATE:
-                handleParticipate();
+                result = handleParticipate();
                 break;
             case STUDENTS:
-                handleStudents();
+                result = handleStudents();
+                break;
+            case GREET:
+                result = "Hi there, welcome!";
+                break;
+            case QUIT:
+                result = "Bye!";
+                break;
+            default:
+                result = "Do you need Help? Available Commands are: (tbd)";
                 break;
         }
+        return result;
     }
 
     private void cleanChevrons(String [] args)
@@ -69,7 +86,7 @@ public class CommandParser {
         }
     }
 
-    public void handleAdd()
+    public String handleAdd()
     {
         String [] argTab = args.split("><");
         for (int i = 0; i < 4; i++) {
@@ -79,28 +96,37 @@ public class CommandParser {
         Idea i = new Idea(db,argTab[0],argTab[1],argTab[2],argTab[3]);
         db.addIdea(i);
         db.addParticipation(i.getId(),s);
+        return "Added Student's "+argTab[0]+ " idea to the database";
     }
 
-    public void handleIdeas()
+    public String handleIdeas()
     {
         List<Idea> ideas = db.getIdeas();
         // Reponse du serveur
-
+        String list = "";
+        String ls = System.lineSeparator();
+        for(Idea id : ideas){
+            list+="ID: "+id.getId()+" Author:"+id.getAuthorName()+" EMAIL:"+id.getAuthorMail()+ls+"\t"+id.getDescription()+ls+id.getTech()+ls+ls;
+        }
+        if(list == "")
+            return "aucune idée n'a encore été soumise."+ls;
+        return list;
 
     }
 
-    public void handleParticipate()
+    public String  handleParticipate()
     {
         String [] argTab = args.split("><");
         for (int i = 0; i < 3; i++) {
             cleanChevrons(argTab);
         }
         //TODO
+        return "Participate OK";
     }
 
-    public void handleStudents()
+    public String  handleStudents()
     {
-
+        return "Students are a list! (TBD)";
     }
 
 
