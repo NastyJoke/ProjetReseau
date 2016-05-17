@@ -4,9 +4,13 @@ import com.company.data.DataBase;
 import com.company.data.Idea;
 import com.company.data.Student;
 import com.company.enums.CommandEnum;
+import com.company.errors.add.*;
+import com.company.errors.ideas.ErrEmptyList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Renaud on 10/05/2016.
@@ -89,10 +93,34 @@ public class CommandParser {
 
     public String handleAdd()
     {
+        Pattern namePattern = Pattern.compile("^[a-zA-Z]+$");
+        Pattern mailPattern = Pattern.compile("^[_A-Za-z0-9-\\\\+]+(\\\\.[_A-Za-z0-9-]+)*\n" +
+                "      @[A-Za-z0-9-]+(\\\\.[A-Za-z0-9]+)*(\\\\.[A-Za-z]{2,})$;");
+
+        Matcher nameMatcher;
+        Matcher mailMatcher;
+
         String [] argTab = args.split("><");
+        if (argTab.length < 4)
+            return (new ErrMissingArg().toString());
+        else if (argTab.length > 4)
+            return (new ErrTooManyArgs().toString());
+
         for (int i = 0; i < 4; i++) {
             cleanChevrons(argTab);
         }
+
+        nameMatcher = namePattern.matcher(argTab[0]);
+        mailMatcher = mailPattern.matcher(argTab[1]);
+
+        if (!nameMatcher.matches())
+            return (new ErrEtudiant()).toString();
+        if (!mailMatcher.matches())
+            return (new ErrMail().toString());
+        if (argTab[2].equals("") || argTab[3].equals(""))
+            return (new ErrVoidArg().toString());
+
+
         Student s = new Student(argTab[1],argTab[0]);
         Idea i = new Idea(db,argTab[0],argTab[1],argTab[2],argTab[3]);
         db.addIdea(i);
@@ -110,7 +138,7 @@ public class CommandParser {
             list+="ID: "+id.getId()+" Author:"+id.getAuthorName()+" EMAIL:"+id.getAuthorMail()+ls+"\t"+id.getDescription()+ls+id.getTech()+ls;
         }
         if(list == "")
-            return "aucune idée n'a encore été soumise."+ls;
+            return (new ErrEmptyList().toString());
         return list;
 
     }

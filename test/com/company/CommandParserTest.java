@@ -1,9 +1,9 @@
 package com.company;
 
 import com.company.data.DataBase;
-import org.junit.Test;
+        import org.junit.Test;
 
-import static org.junit.Assert.*;
+        import static org.junit.Assert.*;
 
 /**
  * Created by Renaud on 10/05/2016.
