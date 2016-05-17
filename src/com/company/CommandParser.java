@@ -20,6 +20,7 @@ public class CommandParser {
     private CommandEnum action;
     private String args;
     private DataBase db;
+    String ls = "|"; //Line separator
 
     public CommandParser(DataBase db, String command)
     {
@@ -132,7 +133,6 @@ public class CommandParser {
     {
         List<Idea> ideas = db.getIdeas();
         // Reponse du serveur
-        String ls = "|"; //Line separator
         String list = "IDEAS LIST:"+ls+ls;
         for(Idea id : ideas){
             list+="ID: "+id.getId()+" Author:"+id.getAuthorName()+" EMAIL:"+id.getAuthorMail()+ls+"\t"+id.getDescription()+ls+id.getTech()+ls;
