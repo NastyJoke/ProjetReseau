@@ -34,9 +34,7 @@ public class Server {
             while ((inputLine = in.readLine()) != null) {
                 c = new CommandParser(db, inputLine);
                 outputLine = c.act();
-                do
-                    out.println(outputLine);
-                while(outputLine.contains(System.lineSeparator()));
+                out.println(outputLine);
 
                 if (outputLine.equals("Bye!"))
                     break;

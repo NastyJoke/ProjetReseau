@@ -68,6 +68,7 @@ public class CommandParser {
                 result = "Do you need Help? Available Commands are: (tbd)";
                 break;
         }
+        result.concat(" OVER");
         return result;
     }
 
@@ -103,10 +104,10 @@ public class CommandParser {
     {
         List<Idea> ideas = db.getIdeas();
         // Reponse du serveur
-        String list = "";
-        String ls = System.lineSeparator();
+        String ls = "|"; //Line separator
+        String list = "IDEAS LIST:"+ls+ls;
         for(Idea id : ideas){
-            list+="ID: "+id.getId()+" Author:"+id.getAuthorName()+" EMAIL:"+id.getAuthorMail()+ls+"\t"+id.getDescription()+ls+id.getTech()+ls+ls;
+            list+="ID: "+id.getId()+" Author:"+id.getAuthorName()+" EMAIL:"+id.getAuthorMail()+ls+"\t"+id.getDescription()+ls+id.getTech()+ls;
         }
         if(list == "")
             return "aucune idée n'a encore été soumise."+ls;
