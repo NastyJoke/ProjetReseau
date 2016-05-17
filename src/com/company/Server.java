@@ -5,7 +5,6 @@ import java.net.*;
 import java.io.*;
 
 public class Server {
-    //Utilise le KnocKnockClient dont je t'avais envoyé le lien, pas besoin de le modifier pour qu'il marche avec ce server
     public static void main(String[] args) throws IOException {
 
         if (args.length != 1) {
