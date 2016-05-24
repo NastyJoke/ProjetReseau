@@ -95,8 +95,7 @@ public class CommandParser {
     public String handleAdd()
     {
         Pattern namePattern = Pattern.compile("^[a-zA-Z]+$");
-        Pattern mailPattern = Pattern.compile("^[_A-Za-z0-9-\\\\+]+(\\\\.[_A-Za-z0-9-]+)*\n" +
-                "      @[A-Za-z0-9-]+(\\\\.[A-Za-z0-9]+)*(\\\\.[A-Za-z]{2,})$;");
+        Pattern mailPattern = Pattern.compile("^[_A-Za-z0-9-]+@[_A-Za-z0-9-.]+\\.[A-Za-z]{2,4}$");
 
         Matcher nameMatcher;
         Matcher mailMatcher;
